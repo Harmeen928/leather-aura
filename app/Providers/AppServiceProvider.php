@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Setting;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,10 +14,12 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    public function boot(): void
-    {
-        View::composer(['layouts.app', 'home'], function ($view) {
-            $view->with('site', Setting::pairs());
-        });
-    }
+   public function boot(): void
+{
+    URL::forceScheme('https');
+
+    View::composer(['layouts.app', 'home'], function ($view) {
+        $view->with('site', Setting::pairs());
+    });
+}
 }
